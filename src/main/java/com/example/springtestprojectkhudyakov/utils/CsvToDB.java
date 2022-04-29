@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CsvToDB {
 
-    public static void convertCSVtoDB(String path , MessageRepo messageRepo) throws IOException {
+    public static void convertCSVtoDB(String path, MessageRepo messageRepo) throws IOException {
         CSVParser parser = new CSVParser(new FileReader(path), CSVFormat.newFormat(';'));
         List<CSVRecord> list = parser.getRecords();
         List<Message> listMessage = new ArrayList<>();
@@ -25,7 +25,7 @@ public class CsvToDB {
                 arr[i++] = str;
             }
 
-            if(counter > 0){
+            if (counter > 0) {
                 listMessage.add(Message.builder()
                         .ssoid(list.get(counter).get(0))
                         .ts(list.get(counter).get(1))

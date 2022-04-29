@@ -38,7 +38,7 @@ public class MainController {
     @PostMapping("addtodb")
     public String addToDB(@RequestParam("file") MultipartFile file, Map<String, Object> model) throws IOException {
         String uuidFile = UUID.randomUUID().toString();
-        String newFilePath = uploadPath+"/"+uuidFile+"."+file.getOriginalFilename();
+        String newFilePath = uploadPath + "/" + uuidFile + "." + file.getOriginalFilename();
         file.transferTo(new File(newFilePath));
 
         csvToDB.convertCSVtoDB(newFilePath, messageRepo);
@@ -48,21 +48,20 @@ public class MainController {
 
 
     @GetMapping("type2")
-    public String testQuestion2(Map<String, Object> model){
+    public String testQuestion2(Map<String, Object> model) {
         List<Message> messages = messageRepo.findAllBySubtype("start");
         List<Message> finalList = new ArrayList<>();
         int visibleContent;
-        if(messages.size()>100){
-            visibleContent=100;
+        if (messages.size() > 100) {
+            visibleContent = 100;
+        } else {
+            visibleContent = messages.size();
         }
-        else{
-            visibleContent=messages.size();
-        }
-        for(int i=0;i<visibleContent;i++){
+        for (int i = 0; i < visibleContent; i++) {
             Message message = messages.get(i);
             List<Message> m = messageRepo.findByFormidAndSsoidAndSubtypeNotSendNotStartNotUnauthorized(
-                    message.getFormid(),message.getSsoid());
-            for(Message message2 : m) {
+                    message.getFormid(), message.getSsoid());
+            for (Message message2 : m) {
                 finalList.add(message2);
             }
         }
@@ -71,29 +70,29 @@ public class MainController {
     }
 
     @GetMapping("type3")
-    public String testQuestion3(Map<String, Object> model){
+    public String testQuestion3(Map<String, Object> model) {
         HashSet<String> formIdSet = messageRepo.findUniqueFormid();
-        HashMap<String,Integer> map= new HashMap<>();
-        for (String formId:formIdSet) {
+        HashMap<String, Integer> map = new HashMap<>();
+        for (String formId : formIdSet) {
             int count = messageRepo.countByFormId(formId);
-            map.put(formId,count);
+            map.put(formId, count);
         }
 
-        LinkedHashMap<String,Integer> sortedMap = map.entrySet().stream()
-                        .sorted(Map.Entry.<String,Integer>comparingByValue().reversed())
-                        .collect(Collectors
+        LinkedHashMap<String, Integer> sortedMap = map.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .collect(Collectors
                         .toMap(Map.Entry::getKey,
                                 Map.Entry::getValue,
                                 (e1, e2) -> e1,
                                 LinkedHashMap::new));
 
-        LinkedHashMap<String,Integer> topFive = new LinkedHashMap<>();
-        for(int i=0;i<5;i++){
+        LinkedHashMap<String, Integer> topFive = new LinkedHashMap<>();
+        for (int i = 0; i < 5; i++) {
             topFive.put(sortedMap.entrySet().iterator().next().getKey(),
                     sortedMap.entrySet().iterator().next().getValue());
             sortedMap.remove(sortedMap.entrySet().iterator().next().getKey());
         }
-        model.put("messages",topFive);
+        model.put("messages", topFive);
         return "type3.html";
     }
 }

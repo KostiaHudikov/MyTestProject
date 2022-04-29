@@ -12,7 +12,7 @@ public interface MessageRepo extends CrudRepository<Message, Long> {
     List<Message> findAllBySubtype(String subtype);
 
     @Query(value = "SELECT m FROM Message m WHERE m.subtype <> 'send' AND m.subtype <> 'start' AND m.ssoid <> 'Unauthorized' AND m.formid = ?1 AND m.ssoid = ?2")
-    List<Message>  findByFormidAndSsoidAndSubtypeNotSendNotStartNotUnauthorized(String formid, String ssoid);
+    List<Message> findByFormidAndSsoidAndSubtypeNotSendNotStartNotUnauthorized(String formid, String ssoid);
 
     @Query(value = "SELECT DISTINCT m.formid FROM Message m WHERE m.formid <> ''")
     HashSet<String> findUniqueFormid();
