@@ -19,6 +19,4 @@ public interface MessageRepo extends CrudRepository<Message, Long> {
 
     @Query(value = "SELECT COUNT(m) FROM Message m WHERE m.formid = ?1")
     int countByFormId(String formId);
-
-    List<Message> findByType(String type);
 }

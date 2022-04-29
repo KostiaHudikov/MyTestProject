@@ -1,17 +1,13 @@
-package com.example.springtestprojectkhudyakov.Utils;
+package com.example.springtestprojectkhudyakov.utils;
 
 import com.example.springtestprojectkhudyakov.domain.Message;
 import com.example.springtestprojectkhudyakov.repos.MessageRepo;
-import lombok.Builder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +24,7 @@ public class CsvToDB {
             for (String str : record) {
                 arr[i++] = str;
             }
+
             if(counter > 0){
                 listMessage.add(Message.builder()
                         .ssoid(list.get(counter).get(0))

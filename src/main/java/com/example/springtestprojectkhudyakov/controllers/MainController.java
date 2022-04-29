@@ -1,12 +1,10 @@
-package com.example.springtestprojectkhudyakov.Controllers;
+package com.example.springtestprojectkhudyakov.controllers;
 
-import com.example.springtestprojectkhudyakov.Utils.CsvToDB;
+import com.example.springtestprojectkhudyakov.utils.CsvToDB;
 import com.example.springtestprojectkhudyakov.domain.Message;
 import com.example.springtestprojectkhudyakov.repos.MessageRepo;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
